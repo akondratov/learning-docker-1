@@ -1,12 +1,10 @@
 FROM alpine:latest
-
-RUN apk update 
-RUN apk add nginx
-RUN mkdir /run/nginx && mkdir /app
-
-COPY app/index.html /app/index.html
-COPY config/nginx.conf /etc/nginx/nginx.conf
-
 EXPOSE 80
+
+RUN apk update --no-cache \
+    && apk add nginx
+
+COPY app .
+COPY config/nginx.conf /etc/nginx/nginx.conf
 
 CMD ["nginx", "-g", "daemon off;"]
